@@ -1,3 +1,5 @@
+const API_BASE = "https://noteplan-new-src.onrender.com/"
+
 const state = {
     status: "all",
     subject: "all",
@@ -14,12 +16,16 @@ const form = $("#noteForm");
 let currentUser = null;
 
 async function api(url, options = {}) {
-    const response = await fetch(url, {
-        headers: {
-            "Content-Type": "application/json"
-        },
-        ...options
-    });
+    const response = await fetch(
+        `${API_BASE}${url}`,
+        {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            ...options
+        }
+    );
 
     const data = await response.json();
 
@@ -807,7 +813,20 @@ modal.addEventListener(
 
 async function checkAuthentication() {
     try {
-        const response = await fetch("/api/me");
+        const response = await fetch(
+            `${API_BASE}/api/me`,
+            {
+                credentials: "include"
+            }
+        );
+        
+        await fetch(
+            `${API_BASE}/api/logout`,
+            {
+                method: "POST",
+                credentials: "include"
+            }
+        );
 
         if (!response.ok) {
             window.location.href = "/login/";
