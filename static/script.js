@@ -813,17 +813,10 @@ modal.addEventListener(
 
 async function checkAuthentication() {
     try {
+        
         const response = await fetch(
             `${API_BASE}/api/me`,
             {
-                credentials: "include"
-            }
-        );
-        
-        await fetch(
-            `${API_BASE}/api/logout`,
-            {
-                method: "POST",
                 credentials: "include"
             }
         );
