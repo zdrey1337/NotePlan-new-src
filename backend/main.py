@@ -6,30 +6,13 @@ import sqlite3
 from datetime import datetime
 import os
 
-
 # ============================================================
 # PATH CONFIGURATION
 # ============================================================
 
-# app.py:
-#
-# main/
-# └── backend/
-#     └── app.py
-#
-# Therefore:
-# parent       = backend
-# parent.parent = main
-
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Your frontend is now directly inside main/
 HTDOCS_DIR = BASE_DIR
-
-# Database will be:
-# main/datasaves.db
 DB_PATH = BASE_DIR / "datasaves.db"
-
 
 # ============================================================
 # FLASK APP
@@ -41,17 +24,8 @@ app = Flask(
     static_url_path="/static"
 )
 
-CORS(
-    app,
-    supports_credentials=True,
-    origins=[
-        "https://noteplan-test.ct.ws/"
-    ]
-)
-
-
 # ============================================================
-# SECRET KEY
+# SECRET KEY / SESSION CONFIGURATION
 # ============================================================
 
 app.secret_key = os.environ.get(
@@ -59,6 +33,24 @@ app.secret_key = os.environ.get(
     "data11ict-development-secret-change-this"
 )
 
+# Required because frontend and backend are on different domains.
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_SAMESITE="None"
+)
+
+# ============================================================
+# CORS
+# ============================================================
+
+CORS(
+    app,
+    supports_credentials=True,
+    origins=[
+        "https://noteplan-test.ct.ws"
+    ]
+)
 
 # ============================================================
 # DATABASE
@@ -66,9 +58,7 @@ app.secret_key = os.environ.get(
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
-
     conn.row_factory = sqlite3.Row
-
     return conn
 
 
@@ -77,12 +67,7 @@ def get_db():
 # ============================================================
 
 def init_db():
-
     conn = get_db()
-
-    # --------------------------------------------------------
-    # USERS TABLE
-    # --------------------------------------------------------
 
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
@@ -96,42 +81,24 @@ def init_db():
         )
     """)
 
-    # --------------------------------------------------------
-    # NOTES TABLE
-    # --------------------------------------------------------
-
     conn.execute("""
         CREATE TABLE IF NOT EXISTS notes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-
             user_id INTEGER NOT NULL,
-
             title TEXT NOT NULL,
             content TEXT DEFAULT '',
-
             subject TEXT DEFAULT 'ICT 11-2',
-
             color TEXT DEFAULT 'blue',
-
             important INTEGER DEFAULT 0,
             completed INTEGER DEFAULT 0,
             pinned INTEGER DEFAULT 0,
-
             author TEXT DEFAULT '',
-
             due_date TEXT,
-
             created_at TEXT NOT NULL,
             updated_at TEXT NOT NULL,
-
-            FOREIGN KEY (user_id)
-                REFERENCES users(id)
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
     """)
-
-    # ========================================================
-    # DEFAULT USERS
-    # ========================================================
 
     users = [
         (
@@ -158,18 +125,12 @@ def init_db():
     ]
 
     for username, password, full_name, section, role in users:
-
         existing = conn.execute(
-            """
-            SELECT id
-            FROM users
-            WHERE username = ?
-            """,
+            "SELECT id FROM users WHERE username = ?",
             (username,)
         ).fetchone()
 
         if not existing:
-
             conn.execute("""
                 INSERT INTO users (
                     username,
@@ -186,45 +147,26 @@ def init_db():
                 full_name,
                 section,
                 role,
-                datetime.now().isoformat(
-                    timespec="seconds"
-                )
+                datetime.now().isoformat(timespec="seconds")
             ))
 
     conn.commit()
 
-    # ========================================================
-    # CREATE PERSONAL WELCOME NOTE FOR EACH ACCOUNT
-    # ========================================================
-
     registered_users = conn.execute("""
-        SELECT
-            id,
-            username,
-            full_name,
-            section
+        SELECT id, username, full_name, section
         FROM users
         ORDER BY id ASC
     """).fetchall()
 
     for user in registered_users:
-
         note_count = conn.execute("""
             SELECT COUNT(*)
             FROM notes
             WHERE user_id = ?
-        """, (
-            user["id"],
-        )).fetchone()[0]
-
-        # Only create the welcome note if the user
-        # doesn't have any notes yet.
+        """, (user["id"],)).fetchone()[0]
 
         if note_count == 0:
-
-            now = datetime.now().isoformat(
-                timespec="seconds"
-            )
+            now = datetime.now().isoformat(timespec="seconds")
 
             conn.execute("""
                 INSERT INTO notes (
@@ -241,31 +183,19 @@ def init_db():
                     created_at,
                     updated_at
                 )
-                VALUES (
-                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (
                 user["id"],
-
                 "ICT100",
-
-                (
-                    f"Welcome {user['full_name']}! "
-                    "This is your personal NotePlan workspace."
-                ),
-
+                f"Welcome {user['full_name']}! "
+                "This is your personal NotePlan workspace.",
                 user["section"],
-
                 "blue",
-
                 0,
                 0,
                 1,
-
                 user["full_name"],
-
                 None,
-
                 now,
                 now
             ))
@@ -279,21 +209,10 @@ def init_db():
 # ============================================================
 
 def serialize_note(row):
-
     note = dict(row)
-
-    note["important"] = bool(
-        note["important"]
-    )
-
-    note["completed"] = bool(
-        note["completed"]
-    )
-
-    note["pinned"] = bool(
-        note["pinned"]
-    )
-
+    note["important"] = bool(note["important"])
+    note["completed"] = bool(note["completed"])
+    note["pinned"] = bool(note["pinned"])
     return note
 
 
@@ -302,13 +221,38 @@ def serialize_note(row):
 # ============================================================
 
 def login_required():
-
     return "user_id" in session
 
 
 def get_current_user_id():
-
     return session.get("user_id")
+
+
+# ============================================================
+# ERROR HANDLERS
+# ============================================================
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        "error": "Bad request."
+    }), 400
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "error": "Endpoint not found."
+    }), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.exception("Internal server error")
+    return jsonify({
+        "error": "Internal server error.",
+        "message": "Check the Render logs for the exact error."
+    }), 500
 
 
 # ============================================================
@@ -317,9 +261,7 @@ def get_current_user_id():
 
 @app.route("/")
 def home():
-
     if not login_required():
-
         return redirect("/login/")
 
     return send_from_directory(
@@ -334,9 +276,7 @@ def home():
 
 @app.route("/login/")
 def login_page():
-
     if login_required():
-
         return redirect("/")
 
     return send_from_directory(
@@ -351,7 +291,6 @@ def login_page():
 
 @app.route("/images/<path:filename>")
 def images(filename):
-
     return send_from_directory(
         HTDOCS_DIR / "images",
         filename
@@ -364,9 +303,7 @@ def images(filename):
 
 @app.get("/api/me")
 def get_current_user():
-
     if not login_required():
-
         return jsonify({
             "authenticated": False
         }), 401
@@ -382,14 +319,11 @@ def get_current_user():
             role
         FROM users
         WHERE id = ?
-    """, (
-        session["user_id"],
-    )).fetchone()
+    """, (session["user_id"],)).fetchone()
 
     conn.close()
 
     if not user:
-
         session.clear()
 
         return jsonify({
@@ -408,21 +342,12 @@ def get_current_user():
 
 @app.post("/api/login")
 def login():
+    data = request.get_json(silent=True) or {}
 
-    data = request.get_json(
-        silent=True
-    ) or {}
-
-    username = str(
-        data.get("username", "")
-    ).strip()
-
-    password = str(
-        data.get("password", "")
-    )
+    username = str(data.get("username", "")).strip()
+    password = str(data.get("password", ""))
 
     if not username or not password:
-
         return jsonify({
             "error": "Username and password are required."
         }), 400
@@ -433,38 +358,38 @@ def login():
         SELECT *
         FROM users
         WHERE username = ?
-    """, (
-        username,
-    )).fetchone()
+    """, (username,)).fetchone()
 
     conn.close()
 
     if not user:
-
         return jsonify({
             "error": "Invalid username or password."
         }), 401
 
-    if not check_password_hash(
-        user["password"],
-        password
-    ):
+    try:
+        password_valid = check_password_hash(
+            user["password"],
+            password
+        )
+    except Exception:
+        app.logger.exception("Password verification failed")
+        return jsonify({
+            "error": "Unable to verify account password."
+        }), 500
 
+    if not password_valid:
         return jsonify({
             "error": "Invalid username or password."
         }), 401
 
-    # Clear previous session
     session.clear()
-
-    # Create new session
     session["user_id"] = user["id"]
     session["username"] = user["username"]
     session["full_name"] = user["full_name"]
 
     return jsonify({
         "success": True,
-
         "user": {
             "id": user["id"],
             "username": user["username"],
@@ -481,7 +406,6 @@ def login():
 
 @app.post("/api/logout")
 def logout():
-
     session.clear()
 
     return jsonify({
@@ -495,35 +419,17 @@ def logout():
 
 @app.get("/api/notes")
 def get_notes():
-
     if not login_required():
-
         return jsonify({
             "error": "Authentication required."
         }), 401
 
-    search = request.args.get(
-        "q",
-        ""
-    ).strip()
-
-    subject = request.args.get(
-        "subject",
-        ""
-    ).strip()
-
-    status = request.args.get(
-        "status",
-        ""
-    ).strip()
-
+    search = request.args.get("q", "").strip()
+    subject = request.args.get("subject", "").strip()
+    status = request.args.get("status", "").strip()
     user_id = get_current_user_id()
 
     conn = get_db()
-
-    # IMPORTANT:
-    # Only retrieve notes belonging to the
-    # currently logged-in user.
 
     query = """
         SELECT *
@@ -531,16 +437,9 @@ def get_notes():
         WHERE user_id = ?
     """
 
-    params = [
-        user_id
-    ]
-
-    # --------------------------------------------------------
-    # SEARCH
-    # --------------------------------------------------------
+    params = [user_id]
 
     if search:
-
         query += """
             AND (
                 title LIKE ?
@@ -550,50 +449,18 @@ def get_notes():
         """
 
         value = f"%{search}%"
-
-        params.extend([
-            value,
-            value,
-            value
-        ])
-
-    # --------------------------------------------------------
-    # SUBJECT
-    # --------------------------------------------------------
+        params.extend([value, value, value])
 
     if subject and subject != "all":
-
-        query += """
-            AND subject = ?
-        """
-
+        query += " AND subject = ?"
         params.append(subject)
 
-    # --------------------------------------------------------
-    # STATUS
-    # --------------------------------------------------------
-
     if status == "important":
-
-        query += """
-            AND important = 1
-        """
-
+        query += " AND important = 1"
     elif status == "completed":
-
-        query += """
-            AND completed = 1
-        """
-
+        query += " AND completed = 1"
     elif status == "active":
-
-        query += """
-            AND completed = 0
-        """
-
-    # --------------------------------------------------------
-    # SORT
-    # --------------------------------------------------------
+        query += " AND completed = 0"
 
     query += """
         ORDER BY
@@ -602,11 +469,7 @@ def get_notes():
             id DESC
     """
 
-    rows = conn.execute(
-        query,
-        params
-    ).fetchall()
-
+    rows = conn.execute(query, params).fetchall()
     conn.close()
 
     return jsonify([
@@ -621,60 +484,39 @@ def get_notes():
 
 @app.post("/api/notes")
 def create_note():
-
     if not login_required():
-
         return jsonify({
             "error": "Authentication required."
         }), 401
 
-    data = request.get_json(
-        silent=True
-    ) or {}
+    data = request.get_json(silent=True) or {}
 
-    title = str(
-        data.get("title", "")
-    ).strip()
-
-    content = str(
-        data.get("content", "")
-    ).strip()
+    title = str(data.get("title", "")).strip()
+    content = str(data.get("content", "")).strip()
 
     if not title:
-
         return jsonify({
             "error": "Note title is required."
         }), 400
 
     user_id = get_current_user_id()
-
     conn = get_db()
 
-    # Get current user
     user = conn.execute("""
-        SELECT
-            id,
-            full_name,
-            section
+        SELECT id, full_name, section
         FROM users
         WHERE id = ?
-    """, (
-        user_id,
-    )).fetchone()
+    """, (user_id,)).fetchone()
 
     if not user:
-
         conn.close()
-
         session.clear()
 
         return jsonify({
             "error": "User account not found."
         }), 401
 
-    now = datetime.now().isoformat(
-        timespec="seconds"
-    )
+    now = datetime.now().isoformat(timespec="seconds")
 
     cursor = conn.execute("""
         INSERT INTO notes (
@@ -691,59 +533,23 @@ def create_note():
             created_at,
             updated_at
         )
-        VALUES (
-            ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         user_id,
-
         title,
-
         content,
-
-        data.get(
-            "subject",
-            user["section"]
-        ),
-
-        data.get(
-            "color",
-            "blue"
-        ),
-
-        int(bool(
-            data.get(
-                "important",
-                False
-            )
-        )),
-
-        int(bool(
-            data.get(
-                "completed",
-                False
-            )
-        )),
-
-        int(bool(
-            data.get(
-                "pinned",
-                False
-            )
-        )),
-
+        data.get("subject", user["section"]),
+        data.get("color", "blue"),
+        int(bool(data.get("important", False))),
+        int(bool(data.get("completed", False))),
+        int(bool(data.get("pinned", False))),
         user["full_name"],
-
-        data.get(
-            "due_date"
-        ) or None,
-
+        data.get("due_date") or None,
         now,
         now
     ))
 
     note_id = cursor.lastrowid
-
     conn.commit()
 
     row = conn.execute("""
@@ -751,10 +557,7 @@ def create_note():
         FROM notes
         WHERE id = ?
         AND user_id = ?
-    """, (
-        note_id,
-        user_id
-    )).fetchone()
+    """, (note_id, user_id)).fetchone()
 
     conn.close()
 
@@ -769,17 +572,12 @@ def create_note():
 
 @app.put("/api/notes/<int:note_id>")
 def update_note(note_id):
-
     if not login_required():
-
         return jsonify({
             "error": "Authentication required."
         }), 401
 
-    data = request.get_json(
-        silent=True
-    ) or {}
-
+    data = request.get_json(silent=True) or {}
     user_id = get_current_user_id()
 
     allowed_fields = [
@@ -797,46 +595,26 @@ def update_note(note_id):
     values = []
 
     for field in allowed_fields:
-
         if field not in data:
             continue
 
         value = data[field]
 
-        if field in [
-            "important",
-            "completed",
-            "pinned"
-        ]:
+        if field in ["important", "completed", "pinned"]:
+            value = int(bool(value))
 
-            value = int(
-                bool(value)
-            )
-
-        updates.append(
-            f"{field} = ?"
-        )
-
+        updates.append(f"{field} = ?")
         values.append(value)
 
     if not updates:
-
         return jsonify({
             "error": "Nothing to update."
         }), 400
 
-    updates.append(
-        "updated_at = ?"
-    )
-
+    updates.append("updated_at = ?")
     values.append(
-        datetime.now().isoformat(
-            timespec="seconds"
-        )
+        datetime.now().isoformat(timespec="seconds")
     )
-
-    # Security:
-    # note_id AND user_id must match.
 
     values.extend([
         note_id,
@@ -848,9 +626,7 @@ def update_note(note_id):
     cursor = conn.execute(
         f"""
         UPDATE notes
-
         SET {", ".join(updates)}
-
         WHERE id = ?
         AND user_id = ?
         """,
@@ -858,7 +634,6 @@ def update_note(note_id):
     )
 
     if cursor.rowcount == 0:
-
         conn.close()
 
         return jsonify({
@@ -872,10 +647,7 @@ def update_note(note_id):
         FROM notes
         WHERE id = ?
         AND user_id = ?
-    """, (
-        note_id,
-        user_id
-    )).fetchone()
+    """, (note_id, user_id)).fetchone()
 
     conn.close()
 
@@ -890,31 +662,24 @@ def update_note(note_id):
 
 @app.delete("/api/notes/<int:note_id>")
 def delete_note(note_id):
-
     if not login_required():
-
         return jsonify({
             "error": "Authentication required."
         }), 401
 
     user_id = get_current_user_id()
-
     conn = get_db()
 
     cursor = conn.execute("""
         DELETE FROM notes
         WHERE id = ?
         AND user_id = ?
-    """, (
-        note_id,
-        user_id
-    ))
+    """, (note_id, user_id))
 
     conn.commit()
     conn.close()
 
     if cursor.rowcount == 0:
-
         return jsonify({
             "error": "Note not found."
         }), 404
@@ -930,54 +695,39 @@ def delete_note(note_id):
 
 @app.get("/api/stats")
 def get_stats():
-
     if not login_required():
-
         return jsonify({
             "error": "Authentication required."
         }), 401
 
     user_id = get_current_user_id()
-
     conn = get_db()
 
-    # Total notes
     total = conn.execute("""
         SELECT COUNT(*)
         FROM notes
         WHERE user_id = ?
-    """, (
-        user_id,
-    )).fetchone()[0]
+    """, (user_id,)).fetchone()[0]
 
-    # Important
     important = conn.execute("""
         SELECT COUNT(*)
         FROM notes
         WHERE user_id = ?
         AND important = 1
-    """, (
-        user_id,
-    )).fetchone()[0]
+    """, (user_id,)).fetchone()[0]
 
-    # Completed
     completed = conn.execute("""
         SELECT COUNT(*)
         FROM notes
         WHERE user_id = ?
         AND completed = 1
-    """, (
-        user_id,
-    )).fetchone()[0]
+    """, (user_id,)).fetchone()[0]
 
-    # Subjects
     subjects = conn.execute("""
         SELECT COUNT(DISTINCT subject)
         FROM notes
         WHERE user_id = ?
-    """, (
-        user_id,
-    )).fetchone()[0]
+    """, (user_id,)).fetchone()[0]
 
     conn.close()
 
@@ -994,57 +744,17 @@ def get_stats():
 # ============================================================
 
 if __name__ == "__main__":
-
     init_db()
 
-    print()
-    print("======================================")
-    print("          DEVELOPED BY DREI")
-    print("======================================")
-    print()
-    print("Project directory:")
-    print(BASE_DIR)
-    print()
-    print("Local Login:")
-    print("http://127.0.0.1:5000/login/")
-    print()
-    print("Local Dashboard:")
-    print("http://127.0.0.1:5000/")
-    print()
-    print("Database:")
-    print(DB_PATH)
-    print()
-    print("======================================")
-    print()
-    print("Registered accounts:")
-    print()
-
-    print("1. Zyrille Cruz")
-    print("   Username: 2026-STJAMES-5831")
-    print("   Password: B1-2026-2354")
-    print()
-
-    print("2. Ceejay Garcia")
-    print("   Username: 2026-STJAMES-5213")
-    print("   Password: B2-2026-5432")
-    print()
-
-    print("3. Andrei Villarama")
-    print("   Username: 2026-STJAMES-3475")
-    print("   Password: B3-2026-3475")
-    print()
+    port = int(os.environ.get("PORT", 5000))
 
     print("======================================")
-
-    # Hosting platforms such as Render/Railway/etc.
-    # commonly provide PORT automatically.
-
-    port = int(
-        os.environ.get(
-            "PORT",
-            5000
-        )
-    )
+    print("          NOTEPLAN BACKEND")
+    print("======================================")
+    print(f"Project directory: {BASE_DIR}")
+    print(f"Database: {DB_PATH}")
+    print(f"Port: {port}")
+    print("======================================")
 
     app.run(
         host="0.0.0.0",
