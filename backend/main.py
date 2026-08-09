@@ -48,7 +48,7 @@ CORS(
     app,
     supports_credentials=True,
     origins=[
-        "https://noteplan-test.ct.ws"
+        "https://noteplan-new-src.onrender.com"
     ]
 )
 
