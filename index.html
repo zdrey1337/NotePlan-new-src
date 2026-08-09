@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ICT11-2</title>
+
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <img
+    src="/images/11ict.png"
+    class="brand-image"
+    alt="ICT 11-2">
+
+            <div>
+                <h1>ICT11-2<span> NotePlan</span></h1>
+                <p>STICKY NOTES</p>
+            </div>
+        </div>
+
+        <div class="sidebar-label">
+            Workspace
+        </div>
+
+        <nav class="navigation">
+
+            <button class="nav-link active" data-status="all">
+                <span>▦</span>
+                Dashboard
+                <b id="dashboardCount">0</b>
+            </button>
+
+            <button class="nav-link" data-status="important">
+                <span>★</span>
+                Important
+                <b id="importantCount">0</b>
+            </button>
+
+            <button class="nav-link" data-status="completed">
+                <span>✓</span>
+                Completed
+            </button>
+
+            <button class="nav-link" data-status="active">
+                <span>▤</span>
+                Active Notes
+            </button>
+
+        </nav>
+
+        <div class="sidebar-label">
+            Subjects
+        </div>
+
+        <div class="subjects">
+
+            <button
+                class="subject-link selected"
+                data-subject="all">
+                <i class="dot all-dot"></i>
+                All Subjects
+            </button>
+
+            <button
+                class="subject-link"
+                data-subject="ICT 11-2">
+                <i class="dot blue"></i>
+                ICT 11-2
+            </button>
+
+            <button
+                class="subject-link"
+                data-subject="Mathematics">
+                <i class="dot purple"></i>
+                Mathematics
+            </button>
+
+            <button
+                class="subject-link"
+                data-subject="General Science">
+                <i class="dot green"></i>
+                General Science
+            </button>
+
+            <button
+                class="subject-link"
+                data-subject="Communication">
+                <i class="dot orange"></i>
+                Communication
+            </button>
+
+            <button
+                class="subject-link"
+                data-subject="Life & Career Skills">
+                <i class="dot pink"></i>
+                Life & Career Skills
+            </button>
+
+        </div>
+
+        <div class="sidebar-spacer"></div>
+
+<div class="sidebar-profile">
+    <div class="avatar" id="sidebarAvatar">
+        --
+    </div>
+    <div>
+        <strong id="sidebarProfileName">Loading...</strong>
+        <small id="sidebarProfileInfo">ICT 11-2 • ST. JAMES</small>
+    </div>
+    <i class="online"></i>
+</div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="mobile-brand">
+                <div class="brand-logo">S</div>
+                <strong>NotePlan v1</strong>
+            </div>
+
+            <div class="search">
+
+                <span>⌕</span>
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Search notes, subjects, tags..."
+                >
+
+                <kbd>CTRL K</kbd>
+
+            </div>
+
+            <div class="top-actions">
+
+                <button class="icon-btn">
+                    ♢
+                </button>
+
+<button
+    id="logoutBtn"
+    class="profile-btn"
+    title="Logout">
+
+<span class="avatar small" id="topAvatar">
+    --
+</span>
+
+<span id="profileName">
+    Loading...
+</span>
+
+<button
+    type="button"
+    id="logoutBtn"
+    class="logout-btn"
+    title="Logout">
+    ↪
+</button>
+
+            </div>
+
+        </header>
+
+        <div class="content">
+
+            <!-- WELCOME -->
+            <section class="welcome">
+
+                <div>
+
+<span class="eyebrow" id="welcomeSection">
+    ICT 11-2 • ST. JAMES
+</span>
+
+<h2 id="welcomeMessage">
+    Good Morning, Student 👋
+</h2>
+
+                    <p>
+                        Your section notes, reminders and deadlines - all in one place.
+                    </p>
+
+                </div>
+
+                <button
+                    id="newNoteBtn"
+                    class="primary-btn">
+                    ＋ New Note
+                </button>
+
+            </section>
+
+            <!-- STATISTICS -->
+            <section class="stats">
+
+                <div class="stat">
+
+                    <span class="stat-icon blue-bg">
+                        ▤
+                    </span>
+
+                    <div>
+                        <b id="totalStat">0</b>
+                        <small>Total Notes</small>
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <span class="stat-icon yellow-bg">
+                        ★
+                    </span>
+
+                    <div>
+                        <b id="importantStat">0</b>
+                        <small>Important</small>
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <span class="stat-icon green-bg">
+                        ✓
+                    </span>
+
+                    <div>
+                        <b id="completedStat">0</b>
+                        <small>Completed</small>
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <span class="stat-icon purple-bg">
+                        ☷
+                    </span>
+
+                    <div>
+                        <b id="subjectsStat">0</b>
+                        <small>Subjects</small>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- NOTES HEADER -->
+            <section class="notes-toolbar">
+
+                <div>
+                    <h3>
+                        Section Notes
+                    </h3>
+
+                    <span id="resultCount">
+                        0 notes
+                    </span>
+                </div>
+
+                <div class="filters">
+
+                    <button
+                        class="filter active"
+                        data-status="all">
+                        All
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-status="important">
+                        Important
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-status="active">
+                        Active
+                    </button>
+
+                    <button
+                        class="filter"
+                        data-status="completed">
+                        Completed
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- NOTES -->
+            <section
+                id="notesGrid"
+                class="notes-grid">
+            </section>
+
+            <div
+                id="emptyState"
+                class="empty hidden">
+
+                <div>
+                    📝
+                </div>
+
+                <h3>
+                    No notes found
+                </h3>
+
+                <p>
+                    Create a new sticky note or change your search/filter.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="right-sidebar">
+
+        <div class="right-heading">
+
+            <h3>
+                Upcoming
+            </h3>
+
+            <span>
+                Live
+            </span>
+
+        </div>
+
+        <div class="calendar">
+
+            <div class="calendar-head">
+
+                <button>
+                    ‹
+                </button>
+
+                <b>
+                    August 2026
+                </b>
+
+                <button>
+                    ›
+                </button>
+
+            </div>
+
+            <div class="week">
+                <span>MON</span>
+                <span>TUE</span>
+                <span>WED</span>
+                <span>THU</span>
+                <span>FRI</span>
+                <span>SAT</span>
+                <span>SUN</span>
+            </div>
+
+            <div class="days">
+
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i></i>
+                <i>1</i>
+                <i>2</i>
+
+                <i>3</i>
+                <i>4</i>
+                <i>5</i>
+                <i>6</i>
+                <i>7</i>
+                <i>8</i>
+                <i class="today">9</i>
+
+                <i>10</i>
+                <i>11</i>
+                <i class="event">12</i>
+                <i>13</i>
+                <i>14</i>
+                <i>15</i>
+                <i>16</i>
+
+                <i>17</i>
+                <i>18</i>
+                <i>19</i>
+                <i>20</i>
+                <i>21</i>
+                <i>22</i>
+                <i>23</i>
+
+                <i>24</i>
+                <i>25</i>
+                <i>26</i>
+                <i>27</i>
+                <i>28</i>
+                <i>29</i>
+                <i>30</i>
+
+                <i>31</i>
+
+            </div>
+
+        </div>
+
+        <div class="right-section">
+
+            <div class="section-heading">
+
+                <h3>
+                    Deadlines
+                </h3>
+
+                <b id="deadlineCount">
+                    0
+                </b>
+
+            </div>
+
+            <div id="deadlines">
+            </div>
+
+        </div>
+
+        <div class="quick-tip">
+
+            <span>
+                ✦
+            </span>
+
+            <div>
+
+                <b>
+                    Real-time workspace
+                </b>
+
+                <p>
+                    Notes are saved to your Python + SQLite backend automatically.
+                </p>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</div>
+
+
+<!-- NOTE MODAL -->
+<div
+    id="noteModal"
+    class="modal hidden">
+
+    <div class="modal-card">
+
+        <div class="modal-head">
+
+            <div>
+
+                <span id="modalEyebrow">
+                    NEW NOTE
+                </span>
+
+                <h2 id="modalTitle">
+                    Create sticky note
+                </h2>
+
+            </div>
+
+            <button
+                id="closeModal"
+                class="close">
+                ×
+            </button>
+
+        </div>
+
+        <form id="noteForm">
+
+            <input
+                id="noteId"
+                type="hidden">
+
+            <label>
+
+                Title
+
+                <input
+                    id="title"
+                    required
+                    maxlength="100"
+                    placeholder="e.g. Math Assignment">
+
+            </label>
+
+            <label>
+
+                Content
+
+                <textarea
+                    id="content"
+                    rows="5"
+                    maxlength="1000"
+                    placeholder="Write your reminder..."></textarea>
+
+            </label>
+
+            <div class="form-grid">
+
+                <label>
+
+                    Subject
+
+                    <select id="subject">
+
+                        <option>
+                            ICT 11-2
+                        </option>
+
+                        <option>
+                            Mathematics
+                        </option>
+
+                        <option>
+                            General Science
+                        </option>
+
+                        <option>
+                            Communication
+                        </option>
+
+                        <option>
+                            Life & Career Skills
+                        </option>
+
+                    </select>
+
+                </label>
+
+                <label>
+
+                    Due date
+
+                    <input
+                        id="dueDate"
+                        type="datetime-local">
+
+                </label>
+
+            </div>
+
+            <label>
+
+                Color
+
+                <select id="color">
+
+                    <option value="blue">
+                        Blue
+                    </option>
+
+                    <option value="yellow">
+                        Yellow
+                    </option>
+
+                    <option value="purple">
+                        Purple
+                    </option>
+
+                    <option value="green">
+                        Green
+                    </option>
+
+                    <option value="pink">
+                        Pink
+                    </option>
+
+                    <option value="orange">
+                        Orange
+                    </option>
+
+                    <option value="red">
+                        Red
+                    </option>
+
+                    <option value="cyan">
+                        Cyan
+                    </option>
+
+                </select>
+
+            </label>
+
+            <div class="form-options">
+
+                <label class="check-option">
+
+                    <input
+                        id="important"
+                        type="checkbox">
+
+                    Mark important
+
+                </label>
+
+                <label class="check-option">
+
+                    <input
+                        id="pinned"
+                        type="checkbox">
+
+                    Pin note
+
+                </label>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="deleteBtn"
+                    class="danger hidden">
+                    Delete
+                </button>
+
+                <div>
+
+                    <button
+                        type="button"
+                        id="cancelBtn"
+                        class="secondary">
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn">
+                        Save Note
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="/static/script.js"></script>
+
+</body>
+</html>

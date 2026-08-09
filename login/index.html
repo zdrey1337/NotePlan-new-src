@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ict11-2 login</title>
+
+    <style>
+
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    font-family: Inter, Arial, sans-serif;
+    color: #172231;
+    background:
+        radial-gradient(circle at 10% 15%, #2388ed55 0, transparent 28%),
+        radial-gradient(circle at 90% 20%, #6d5dfc45 0, transparent 30%),
+        radial-gradient(circle at 80% 90%, #00b7ff35 0, transparent 28%),
+        linear-gradient(135deg, #081525, #0d1d35 45%, #101b32);
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(#ffffff08 1px, transparent 1px),
+        linear-gradient(90deg, #ffffff08 1px, transparent 1px);
+    background-size: 45px 45px;
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    left: -180px;
+    bottom: -200px;
+    border-radius: 50%;
+    background: #2388ed30;
+    filter: blur(70px);
+    pointer-events: none;
+}
+
+.page {
+    width: min(960px, 100%);
+    min-height: 570px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    border: 1px solid #ffffff30;
+    border-radius: 24px;
+    background: #ffffffee;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow:
+        0 35px 100px #00000055,
+        0 0 0 1px #ffffff0d inset;
+}
+
+        .visual {
+            position: relative;
+            overflow: hidden;
+            padding: 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            color: white;
+            background:
+                linear-gradient(145deg, #087be8, #55b5ff);
+        }
+
+        .visual::before {
+            content: "";
+            position: absolute;
+            width: 330px;
+            height: 330px;
+            right: -150px;
+            top: -130px;
+            border: 55px solid #ffffff16;
+            border-radius: 50%;
+        }
+
+        .visual::after {
+            content: "";
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            left: -130px;
+            bottom: -100px;
+            border: 45px solid #ffffff14;
+            border-radius: 50%;
+        }
+
+        .brand {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .logo {
+            width: 58px;
+            height: 58px;
+            padding: 7px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: #ffffff;
+            box-shadow: 0 12px 30px #004e9c30;
+        }
+
+        .brand h1 {
+            font-size: 21px;
+            letter-spacing: -.8px;
+        }
+
+        .brand p {
+            margin-top: 4px;
+            opacity: .75;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .visual-content span {
+            opacity: .75;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+        }
+
+        .visual-content h2 {
+            max-width: 390px;
+            margin-top: 12px;
+            font-size: 38px;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+        }
+
+        .visual-content p {
+            max-width: 370px;
+            margin-top: 15px;
+            color: #e7f5ff;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .visual-footer {
+            position: relative;
+            z-index: 2;
+            color: #dcefff;
+            font-size: 8px;
+        }
+
+.login-info {
+    margin-top: 22px;
+    padding: 12px;
+    border: 1px solid #dfe5ed;
+    border-radius: 10px;
+    background: #f5f8fc;
+}
+
+.login-info span {
+    color: #2388ed;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.login-info p {
+    margin-top: 5px;
+    color: #8a95a4;
+    font-size: 8px;
+}
+
+.login-area {
+    padding: 55px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffffd9;
+}
+
+        .login-area .small-label {
+            color: #2589e9;
+            font-size: 8px;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+        }
+
+        .login-area h2 {
+            margin-top: 8px;
+            font-size: 27px;
+            letter-spacing: -.9px;
+        }
+
+        .login-area .description {
+            margin-top: 7px;
+            color: #8a95a4;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        form {
+            margin-top: 28px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 15px;
+            color: #586577;
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .input-wrap {
+            position: relative;
+            margin-top: 7px;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0a9b5;
+            font-size: 13px;
+        }
+
+        input {
+            width: 100%;
+            height: 43px;
+            padding: 0 40px 0 35px;
+            outline: none;
+            border: 1px solid #dfe4eb;
+            border-radius: 9px;
+            color: #172231;
+            background: #fafbfd;
+            font-size: 10px;
+            transition: .2s;
+        }
+
+        input:focus {
+            border-color: #61aef2;
+            background: white;
+            box-shadow: 0 0 0 4px #2388ed10;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            width: 28px;
+            height: 28px;
+            transform: translateY(-50%);
+            border-radius: 6px;
+            color: #8994a2;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .password-toggle:hover {
+            background: #f0f3f6;
+        }
+
+        .options {
+            margin: 2px 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .remember {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #818c9b;
+            font-size: 8px;
+            font-weight: 500;
+        }
+
+        .remember input {
+            width: 13px;
+            height: 13px;
+            accent-color: #2388ed;
+        }
+
+        .forgot {
+            color: #2388ed;
+            font-size: 8px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 43px;
+            border: 0;
+            border-radius: 9px;
+            color: white;
+            background: #2388ed;
+            box-shadow: 0 9px 20px #2388ed25;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .login-btn:hover {
+            background: #1479dc;
+            transform: translateY(-1px);
+        }
+
+        .login-btn:disabled {
+            opacity: .65;
+            cursor: wait;
+            transform: none;
+        }
+
+        .error {
+            min-height: 0;
+            margin-bottom: 12px;
+            padding: 0;
+            border-radius: 8px;
+            color: #c95858;
+            background: #fff0f0;
+            font-size: 8px;
+            line-height: 1.5;
+        }
+
+        .error.show {
+            padding: 9px 10px;
+        }
+
+        .demo {
+            margin-top: 22px;
+            padding: 11px;
+            border: 1px solid #e2e7ed;
+            border-radius: 9px;
+            background: #f8fafc;
+        }
+
+        .demo strong {
+            display: block;
+            color: #667283;
+            font-size: 7px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .demo p {
+            margin-top: 5px;
+            color: #8d97a5;
+            font-size: 8px;
+        }
+
+        .demo b {
+            color: #536174;
+        }
+
+        @media (max-width: 760px) {
+            .page {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                min-height: 270px;
+                padding: 30px;
+            }
+
+            .visual-content h2 {
+                font-size: 29px;
+            }
+
+            .visual-footer {
+                display: none;
+            }
+
+            .login-area {
+                padding: 35px 30px;
+            }
+        }
+
+        @media (max-width: 450px) {
+            body {
+                padding: 12px;
+            }
+
+            .visual {
+                min-height: 240px;
+                padding: 25px;
+            }
+
+            .visual-content h2 {
+                font-size: 25px;
+            }
+
+            .login-area {
+                padding: 30px 22px;
+            }
+        }
+
+.page::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    right: 35%;
+    top: -110px;
+    border-radius: 50%;
+    background: #2388ed25;
+    filter: blur(25px);
+    pointer-events: none;
+}
+
+.page::after {
+    content: "";
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    left: 40%;
+    bottom: -90px;
+    border-radius: 50%;
+    background: #7357ff20;
+    filter: blur(25px);
+    pointer-events: none;
+}
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <section class="visual">
+
+        <div class="brand">
+
+            <img
+                src="/images/11ict.png"
+                alt="ICT 11-2 Logo"
+                class="logo">
+
+            <div>
+                <h1>NotePlan v0.1.1</h1>
+                <p>ICT 11-2 • ST. JAMES</p>
+            </div>
+
+        </div>
+
+        <div class="visual-content">
+
+            <span>YOUR SECTION WORKSPACE</span>
+
+            <h2>
+                Everything your section needs, in one place.
+            </h2>
+
+            <p>
+                Keep your school reminders, assignments,
+                deadlines and important notes organized
+                with your own digital workspace.
+            </p>
+
+        </div>
+
+        <div class="visual-footer">
+            © 2026 ICT 11-2 • St.James
+        </div>
+
+    </section>
+
+    <section class="login-area">
+
+        <span class="small-label">
+            WELCOME BACK
+        </span>
+
+        <h2>
+            Sign in to ST.JAMES(NOTEPLAN)
+        </h2>
+
+        <p class="description">
+            Access your section sticky notes and workspace.
+        </p>
+
+        <form id="loginForm">
+
+            <label>
+                Username
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        ◉
+                    </span>
+
+<input
+    id="username"
+    type="text"
+    autocomplete="username"
+    placeholder="2026-STJAMES-XXXX"
+    required>
+
+                </div>
+
+            </label>
+
+            <label>
+                Password
+
+                <div class="input-wrap">
+
+                    <span class="input-icon">
+                        ◈
+                    </span>
+
+<input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+    placeholder="Enter your password"
+    required>
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="password-toggle">
+                        ◉
+                    </button>
+
+                </div>
+
+            </label>
+
+            <div
+                id="error"
+                class="error">
+            </div>
+
+            <div class="options">
+
+                <label class="remember">
+
+                    <input
+                        id="remember"
+                        type="checkbox">
+
+                    Remember me
+
+                </label>
+
+                <a
+                    href="#"
+                    class="forgot"
+                    onclick="return false;">
+                    Forgot password?
+                </a>
+
+            </div>
+
+            <button
+                id="loginBtn"
+                class="login-btn"
+                type="submit">
+
+                Sign In →
+
+            </button>
+
+        </form>
+
+<div class="login-info">
+    <span>NotePlan\STJAMES • ICT 11-2</span>
+    <p>Use your official NotePlan account to continue.</p>
+</div>
+
+    </section>
+
+</div>
+
+<script>
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const username =
+        document.getElementById("username");
+
+    const password =
+        document.getElementById("password");
+
+    const loginBtn =
+        document.getElementById("loginBtn");
+
+    const error =
+        document.getElementById("error");
+
+    const togglePassword =
+        document.getElementById("togglePassword");
+
+    togglePassword.addEventListener(
+        "click",
+        () => {
+            const isPassword =
+                password.type === "password";
+
+            password.type =
+                isPassword
+                    ? "text"
+                    : "password";
+
+            togglePassword.textContent =
+                isPassword
+                    ? "◎"
+                    : "◉";
+        }
+    );
+
+    function showError(message) {
+        error.textContent = message;
+        error.classList.add("show");
+    }
+
+    function clearError() {
+        error.textContent = "";
+        error.classList.remove("show");
+    }
+
+    loginForm.addEventListener(
+        "submit",
+        async event => {
+            event.preventDefault();
+
+            clearError();
+
+            loginBtn.disabled = true;
+            loginBtn.textContent =
+                "Signing in...";
+
+            try {
+                const response =
+                    await fetch("/api/login", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body: JSON.stringify({
+                            username:
+                                username.value.trim(),
+                            password:
+                                password.value
+                        })
+                    });
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.error ||
+                        "Unable to login."
+                    );
+                }
+
+                loginBtn.textContent =
+                    "Welcome back, Classmate ;)";
+
+                window.location.href = "/";
+
+            } catch (err) {
+                showError(err.message);
+
+                loginBtn.disabled = false;
+                loginBtn.textContent =
+                    "Sign In →";
+            }
+        }
+    );
+
+    username.focus();
+</script>
+
+</body>
+</html>
