@@ -3,37 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>ICT11-2</title>
-
     <link rel="stylesheet" href="static/style.css">
 </head>
 
 <body>
 
-<div class="app">
-
     <!-- SIDEBAR -->
     <aside class="sidebar">
-
         <div class="brand">
-            <img
-    src="/images/11ict.png"
-    class="brand-image"
-    alt="ICT 11-2">
-
+            <img src="/images/11ict.png" class="brand-image" alt="ICT 11-2">
             <div>
                 <h1>ICT11-2<span> NotePlan</span></h1>
                 <p>STICKY NOTES</p>
             </div>
         </div>
 
-        <div class="sidebar-label">
-            Workspace
-        </div>
+        <div class="sidebar-label">Workspace</div>
 
         <nav class="navigation">
-
             <button class="nav-link active" data-status="all">
                 <span>▦</span>
                 Dashboard
@@ -56,318 +44,155 @@
                 Active Notes
             </button>
 
+            <button class="nav-link" id="logoutBtn">
+                <span>↪</span>
+                Logout
+            </button>
         </nav>
 
-        <div class="sidebar-label">
-            Subjects
-        </div>
+        <div class="sidebar-label">Subjects</div>
 
         <div class="subjects">
-
-            <button
-                class="subject-link selected"
-                data-subject="all">
+            <button class="subject-link selected" data-subject="all">
                 <i class="dot all-dot"></i>
                 All Subjects
             </button>
 
-            <button
-                class="subject-link"
-                data-subject="ICT 11-2">
+            <button class="subject-link" data-subject="ICT 11-2">
                 <i class="dot blue"></i>
                 ICT 11-2
             </button>
 
-            <button
-                class="subject-link"
-                data-subject="Mathematics">
+            <button class="subject-link" data-subject="Mathematics">
                 <i class="dot purple"></i>
                 Mathematics
             </button>
 
-            <button
-                class="subject-link"
-                data-subject="General Science">
+            <button class="subject-link" data-subject="General Science">
                 <i class="dot green"></i>
                 General Science
             </button>
 
-            <button
-                class="subject-link"
-                data-subject="Communication">
+            <button class="subject-link" data-subject="Communication">
                 <i class="dot orange"></i>
                 Communication
             </button>
 
-            <button
-                class="subject-link"
-                data-subject="Life & Career Skills">
+            <button class="subject-link" data-subject="Life & Career Skills">
                 <i class="dot pink"></i>
                 Life & Career Skills
             </button>
-
         </div>
 
         <div class="sidebar-spacer"></div>
-
-<div class="sidebar-profile">
-    <div class="avatar" id="sidebarAvatar">
-        --
-    </div>
-    <div>
-        <strong id="sidebarProfileName">Loading...</strong>
-        <small id="sidebarProfileInfo">ICT 11-2 • ST. JAMES</small>
-    </div>
-    <i class="online"></i>
-</div>
-
     </aside>
 
     <!-- MAIN -->
     <main class="main">
-
         <header class="topbar">
-
             <div class="mobile-brand">
                 <div class="brand-logo">S</div>
                 <strong>NotePlan v1</strong>
             </div>
 
             <div class="search">
-
                 <span>⌕</span>
-
-                <input
-                    id="searchInput"
-                    type="search"
-                    placeholder="Search notes, subjects, tags..."
-                >
-
+                <input id="searchInput" type="search" placeholder="Search notes, subjects, tags...">
                 <kbd>CTRL K</kbd>
-
             </div>
 
             <div class="top-actions">
-
-                <button class="icon-btn">
-                    ♢
-                </button>
-
-<button
-    id="logoutBtn"
-    class="profile-btn"
-    title="Logout">
-
-<div class="profile-btn">
-    <span class="avatar small" id="topAvatar">
-        --
-    </span>
-
-    <span id="profileName">
-        Loading...
-    </span>
-
-    <button
-        type="button"
-        id="logoutBtn"
-        class="logout-btn"
-        title="Logout">
-        ↪
-    </button>
-</div>
-
+                <button class="icon-btn" type="button">♢</button>
             </div>
-
         </header>
 
         <div class="content">
 
             <!-- WELCOME -->
             <section class="welcome">
-
                 <div>
-
-<span class="eyebrow" id="welcomeSection">
-    ICT 11-2 • ST. JAMES
-</span>
-
-<h2 id="welcomeMessage">
-    Good Morning, Student 👋
-</h2>
-
-                    <p>
-                        Your section notes, reminders and deadlines - all in one place.
-                    </p>
-
+                    <p>Your section notes, reminders and deadlines - all in one place.</p>
                 </div>
 
-                <button
-                    id="newNoteBtn"
-                    class="primary-btn">
+                <button id="newNoteBtn" class="primary-btn" type="button">
                     ＋ New Note
                 </button>
-
             </section>
 
             <!-- STATISTICS -->
             <section class="stats">
-
                 <div class="stat">
-
-                    <span class="stat-icon blue-bg">
-                        ▤
-                    </span>
-
+                    <span class="stat-icon blue-bg">▤</span>
                     <div>
                         <b id="totalStat">0</b>
                         <small>Total Notes</small>
                     </div>
-
                 </div>
 
                 <div class="stat">
-
-                    <span class="stat-icon yellow-bg">
-                        ★
-                    </span>
-
+                    <span class="stat-icon yellow-bg">★</span>
                     <div>
                         <b id="importantStat">0</b>
                         <small>Important</small>
                     </div>
-
                 </div>
 
                 <div class="stat">
-
-                    <span class="stat-icon green-bg">
-                        ✓
-                    </span>
-
+                    <span class="stat-icon green-bg">✓</span>
                     <div>
                         <b id="completedStat">0</b>
                         <small>Completed</small>
                     </div>
-
                 </div>
 
                 <div class="stat">
-
-                    <span class="stat-icon purple-bg">
-                        ☷
-                    </span>
-
+                    <span class="stat-icon purple-bg">☷</span>
                     <div>
                         <b id="subjectsStat">0</b>
                         <small>Subjects</small>
                     </div>
-
                 </div>
-
             </section>
 
             <!-- NOTES HEADER -->
             <section class="notes-toolbar">
-
                 <div>
-                    <h3>
-                        Section Notes
-                    </h3>
-
-                    <span id="resultCount">
-                        0 notes
-                    </span>
+                    <h3>Section Notes</h3>
+                    <span id="resultCount">0 notes</span>
                 </div>
 
                 <div class="filters">
-
-                    <button
-                        class="filter active"
-                        data-status="all">
-                        All
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-status="important">
-                        Important
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-status="active">
-                        Active
-                    </button>
-
-                    <button
-                        class="filter"
-                        data-status="completed">
-                        Completed
-                    </button>
-
+                    <button class="filter active" data-status="all" type="button">All</button>
+                    <button class="filter" data-status="important" type="button">Important</button>
+                    <button class="filter" data-status="active" type="button">Active</button>
+                    <button class="filter" data-status="completed" type="button">Completed</button>
                 </div>
-
             </section>
 
             <!-- NOTES -->
-            <section
-                id="notesGrid"
-                class="notes-grid">
-            </section>
+            <section id="notesGrid" class="notes-grid"></section>
 
-            <div
-                id="emptyState"
-                class="empty hidden">
-
-                <div>
-                    📝
-                </div>
-
-                <h3>
-                    No notes found
-                </h3>
-
-                <p>
-                    Create a new sticky note or change your search/filter.
-                </p>
-
+            <div id="emptyState" class="empty hidden">
+                <div>📝</div>
+                <h3>No notes found</h3>
+                <p>Create a new sticky note or change your search/filter.</p>
             </div>
 
         </div>
-
     </main>
 
     <!-- RIGHT SIDEBAR -->
     <aside class="right-sidebar">
-
         <div class="right-heading">
-
-            <h3>
-                Upcoming
-            </h3>
-
-            <span>
-                Live
-            </span>
-
+            <h3>Upcoming</h3>
+            <span>Live</span>
         </div>
 
         <div class="calendar">
-
             <div class="calendar-head">
-
-                <button>
-                    ‹
-                </button>
-
-                <b>
-                    August 2026
-                </b>
-
-                <button>
-                    ›
-                </button>
-
+                <button type="button">‹</button>
+                <b>August 2026</b>
+                <button type="button">›</button>
             </div>
 
             <div class="week">
@@ -381,7 +206,6 @@
             </div>
 
             <div class="days">
-
                 <i></i>
                 <i></i>
                 <i></i>
@@ -423,261 +247,652 @@
                 <i>30</i>
 
                 <i>31</i>
-
             </div>
-
         </div>
 
         <div class="right-section">
-
             <div class="section-heading">
-
-                <h3>
-                    Deadlines
-                </h3>
-
-                <b id="deadlineCount">
-                    0
-                </b>
-
+                <h3>Deadlines</h3>
+                <b id="deadlineCount">0</b>
             </div>
 
-            <div id="deadlines">
-            </div>
-
+            <div id="deadlines"></div>
         </div>
 
         <div class="quick-tip">
-
-            <span>
-                ✦
-            </span>
-
+            <span>✦</span>
             <div>
-
-                <b>
-                    Real-time workspace
-                </b>
-
-                <p>
-                    Notes are saved to your Python + SQLite backend automatically.
-                </p>
-
+                <b>Real-time workspace</b>
+                <p>Notes are saved to your Python + SQLite backend automatically.</p>
             </div>
-
         </div>
-
     </aside>
 
-</div>
-
-
-<!-- NOTE MODAL -->
-<div
-    id="noteModal"
-    class="modal hidden">
-
-    <div class="modal-card">
-
-        <div class="modal-head">
-
-            <div>
-
-                <span id="modalEyebrow">
-                    NEW NOTE
-                </span>
-
-                <h2 id="modalTitle">
-                    Create sticky note
-                </h2>
-
-            </div>
-
-            <button
-                id="closeModal"
-                class="close">
-                ×
-            </button>
-
-        </div>
-
-        <form id="noteForm">
-
-            <input
-                id="noteId"
-                type="hidden">
-
-            <label>
-
-                Title
-
-                <input
-                    id="title"
-                    required
-                    maxlength="100"
-                    placeholder="e.g. Math Assignment">
-
-            </label>
-
-            <label>
-
-                Content
-
-                <textarea
-                    id="content"
-                    rows="5"
-                    maxlength="1000"
-                    placeholder="Write your reminder..."></textarea>
-
-            </label>
-
-            <div class="form-grid">
-
-                <label>
-
-                    Subject
-
-                    <select id="subject">
-
-                        <option>
-                            ICT 11-2
-                        </option>
-
-                        <option>
-                            Mathematics
-                        </option>
-
-                        <option>
-                            General Science
-                        </option>
-
-                        <option>
-                            Communication
-                        </option>
-
-                        <option>
-                            Life & Career Skills
-                        </option>
-
-                    </select>
-
-                </label>
-
-                <label>
-
-                    Due date
-
-                    <input
-                        id="dueDate"
-                        type="datetime-local">
-
-                </label>
-
-            </div>
-
-            <label>
-
-                Color
-
-                <select id="color">
-
-                    <option value="blue">
-                        Blue
-                    </option>
-
-                    <option value="yellow">
-                        Yellow
-                    </option>
-
-                    <option value="purple">
-                        Purple
-                    </option>
-
-                    <option value="green">
-                        Green
-                    </option>
-
-                    <option value="pink">
-                        Pink
-                    </option>
-
-                    <option value="orange">
-                        Orange
-                    </option>
-
-                    <option value="red">
-                        Red
-                    </option>
-
-                    <option value="cyan">
-                        Cyan
-                    </option>
-
-                </select>
-
-            </label>
-
-            <div class="form-options">
-
-                <label class="check-option">
-
-                    <input
-                        id="important"
-                        type="checkbox">
-
-                    Mark important
-
-                </label>
-
-                <label class="check-option">
-
-                    <input
-                        id="pinned"
-                        type="checkbox">
-
-                    Pin note
-
-                </label>
-
-            </div>
-
-            <div class="modal-actions">
-
-                <button
-                    type="button"
-                    id="deleteBtn"
-                    class="danger hidden">
-                    Delete
-                </button>
-
+    <!-- NOTE MODAL -->
+    <div class="modal hidden" id="noteModal">
+        <div class="modal-card">
+            <div class="modal-head">
                 <div>
-
-                    <button
-                        type="button"
-                        id="cancelBtn"
-                        class="secondary">
-                        Cancel
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="primary-btn">
-                        Save Note
-                    </button>
-
+                    <span id="modalEyebrow">NEW NOTE</span>
+                    <h2 id="modalTitle">Create sticky note</h2>
                 </div>
 
+                <button id="closeModal" class="close" type="button">×</button>
             </div>
 
-        </form>
+            <form id="noteForm">
+                <input id="noteId" type="hidden">
 
+                <label>
+                    Title
+                    <input id="title" required maxlength="100" placeholder="e.g. Math Assignment">
+                </label>
+
+                <label>
+                    Content
+                    <textarea id="content" rows="5" maxlength="1000" placeholder="Write your reminder..."></textarea>
+                </label>
+
+                <div class="form-grid">
+                    <label>
+                        Subject
+                        <select id="subject">
+                            <option value="ICT 11-2">ICT 11-2</option>
+                            <option value="Mathematics">Mathematics</option>
+                            <option value="General Science">General Science</option>
+                            <option value="Communication">Communication</option>
+                            <option value="Life & Career Skills">Life & Career Skills</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Due date
+                        <input id="dueDate" type="datetime-local">
+                    </label>
+                </div>
+
+                <label>
+                    Color
+                    <select id="color">
+                        <option value="blue">Blue</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="purple">Purple</option>
+                        <option value="green">Green</option>
+                        <option value="pink">Pink</option>
+                        <option value="orange">Orange</option>
+                        <option value="red">Red</option>
+                        <option value="cyan">Cyan</option>
+                    </select>
+                </label>
+
+                <div class="form-options">
+                    <label class="check-option">
+                        <input id="important" type="checkbox">
+                        Mark important
+                    </label>
+
+                    <label class="check-option">
+                        <input id="pinned" type="checkbox">
+                        Pin note
+                    </label>
+
+                    <label class="check-option">
+                        <input id="completed" type="checkbox">
+                        Mark completed
+                    </label>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="deleteBtn" class="danger hidden">
+                        Delete
+                    </button>
+
+                    <div>
+                        <button type="button" id="cancelBtn" class="secondary">
+                            Cancel
+                        </button>
+
+                        <button type="submit" class="primary-btn">
+                            Save Note
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
-</div>
+    <!-- TOAST -->
+    <div id="toast" class="toast"></div>
 
-<div id="toast" class="toast"></div>
+    <script>
+        const API = "/api";
 
-<script src="/static/script.js"></script>
+        const state = {
+            status: "all",
+            subject: "all",
+            search: "",
+            notes: []
+        };
+
+        const $ = selector => document.querySelector(selector);
+        const $$ = selector => document.querySelectorAll(selector);
+
+        async function api(endpoint, options = {}) {
+            const response = await fetch(API + endpoint, {
+                credentials: "include",
+                ...options,
+                headers: {
+                    "Content-Type": "application/json",
+                    ...(options.headers || {})
+                }
+            });
+
+            let data = {};
+
+            try {
+                data = await response.json();
+            } catch {
+                data = {};
+            }
+
+            if (!response.ok) {
+                throw new Error(data.error || `Request failed (${response.status})`);
+            }
+
+            return data;
+        }
+
+        async function checkAuthentication() {
+            try {
+                const data = await api("/me");
+
+                if (!data.authenticated) {
+                    window.location.href = "/login/";
+                    return false;
+                }
+
+                updateUserInfo(data.user);
+                return true;
+            } catch (error) {
+                console.error("Authentication error:", error);
+                window.location.href = "/login/";
+                return false;
+            }
+        }
+
+        function updateUserInfo(user) {
+            if (!user) return;
+
+            const welcomeText = $(".welcome p");
+
+            if (welcomeText) {
+                welcomeText.textContent =
+                    `Welcome back, ${user.full_name}. Your section notes, reminders and deadlines - all in one place.`;
+            }
+        }
+
+        async function loadNotes() {
+            try {
+                const params = new URLSearchParams();
+
+                if (state.search) {
+                    params.set("q", state.search);
+                }
+
+                if (state.subject !== "all") {
+                    params.set("subject", state.subject);
+                }
+
+                if (state.status !== "all") {
+                    params.set("status", state.status);
+                }
+
+                const query = params.toString();
+                const data = await api(`/notes${query ? "?" + query : ""}`);
+
+                state.notes = Array.isArray(data) ? data : [];
+
+                renderNotes();
+                updateResultCount();
+                renderDeadlines();
+            } catch (error) {
+                console.error("Failed to load notes:", error);
+                showToast(error.message, "error");
+            }
+        }
+
+        async function loadStats() {
+            try {
+                const stats = await api("/stats");
+
+                $("#totalStat").textContent = stats.total ?? 0;
+                $("#importantStat").textContent = stats.important ?? 0;
+                $("#completedStat").textContent = stats.completed ?? 0;
+                $("#subjectsStat").textContent = stats.subjects ?? 0;
+
+                $("#dashboardCount").textContent = stats.total ?? 0;
+                $("#importantCount").textContent = stats.important ?? 0;
+            } catch (error) {
+                console.error("Failed to load stats:", error);
+            }
+        }
+
+        function renderNotes() {
+            const grid = $("#notesGrid");
+            const empty = $("#emptyState");
+
+            grid.innerHTML = "";
+
+            if (!state.notes.length) {
+                empty.classList.remove("hidden");
+                return;
+            }
+
+            empty.classList.add("hidden");
+
+            state.notes.forEach(note => {
+                grid.appendChild(createNoteCard(note));
+            });
+        }
+
+        function createNoteCard(note) {
+            const card = document.createElement("article");
+
+            card.className = `note-card ${note.color || "blue"}`;
+
+            if (note.completed) {
+                card.classList.add("completed");
+            }
+
+            if (note.pinned) {
+                card.classList.add("pinned");
+            }
+
+            const title = escapeHTML(note.title || "Untitled");
+            const content = escapeHTML(note.content || "");
+            const subject = escapeHTML(note.subject || "ICT 11-2");
+            const author = escapeHTML(note.author || "");
+            const dueDate = note.due_date ? formatDate(note.due_date) : "";
+
+            card.innerHTML = `
+                <div class="note-card-head">
+                    <span class="note-subject">${subject}</span>
+                    <div class="note-actions">
+                        ${note.pinned ? "<span title=\"Pinned\">📌</span>" : ""}
+                        ${note.important ? "<span title=\"Important\">★</span>" : ""}
+                    </div>
+                </div>
+
+                <h3>${title}</h3>
+
+                <p class="note-content">
+                    ${content || "No content."}
+                </p>
+
+                ${dueDate ? `
+                    <div class="note-due">
+                        Due: ${escapeHTML(dueDate)}
+                    </div>
+                ` : ""}
+
+                <div class="note-card-footer">
+                    <span>${author}</span>
+                    <button type="button" class="edit-note" data-id="${note.id}">
+                        Edit
+                    </button>
+                </div>
+            `;
+
+            card.addEventListener("click", event => {
+                if (event.target.closest(".edit-note")) return;
+                openEditModal(note);
+            });
+
+            return card;
+        }
+
+        function updateResultCount() {
+            const count = state.notes.length;
+            $("#resultCount").textContent =
+                `${count} ${count === 1 ? "note" : "notes"}`;
+        }
+
+        function renderDeadlines() {
+            const container = $("#deadlines");
+            const countElement = $("#deadlineCount");
+
+            if (!container) return;
+
+            const deadlines = state.notes
+                .filter(note => note.due_date && !note.completed)
+                .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))
+                .slice(0, 5);
+
+            container.innerHTML = "";
+            countElement.textContent = deadlines.length;
+
+            deadlines.forEach(note => {
+                const item = document.createElement("div");
+                item.className = "deadline-item";
+
+                item.innerHTML = `
+                    <strong>${escapeHTML(note.title)}</strong>
+                    <span>${escapeHTML(formatDate(note.due_date))}</span>
+                `;
+
+                item.addEventListener("click", () => openEditModal(note));
+
+                container.appendChild(item);
+            });
+        }
+
+        function formatDate(value) {
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return value;
+            }
+
+            return date.toLocaleString("en-PH", {
+                dateStyle: "medium",
+                timeStyle: "short"
+            });
+        }
+
+        function escapeHTML(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function openNewModal() {
+            $("#modalEyebrow").textContent = "NEW NOTE";
+            $("#modalTitle").textContent = "Create sticky note";
+
+            $("#noteId").value = "";
+            $("#title").value = "";
+            $("#content").value = "";
+            $("#subject").value = "ICT 11-2";
+            $("#dueDate").value = "";
+            $("#color").value = "blue";
+            $("#important").checked = false;
+            $("#pinned").checked = false;
+            $("#completed").checked = false;
+
+            $("#deleteBtn").classList.add("hidden");
+
+            $("#noteModal").classList.remove("hidden");
+            $("#noteModal").classList.add("show");
+        }
+
+        function openEditModal(note) {
+            $("#modalEyebrow").textContent = "EDIT NOTE";
+            $("#modalTitle").textContent = "Edit sticky note";
+
+            $("#noteId").value = note.id;
+            $("#title").value = note.title || "";
+            $("#content").value = note.content || "";
+            $("#subject").value = note.subject || "ICT 11-2";
+            $("#color").value = note.color || "blue";
+            $("#important").checked = Boolean(note.important);
+            $("#pinned").checked = Boolean(note.pinned);
+            $("#completed").checked = Boolean(note.completed);
+
+            $("#dueDate").value = note.due_date
+                ? convertToDatetimeLocal(note.due_date)
+                : "";
+
+            $("#deleteBtn").classList.remove("hidden");
+
+            $("#noteModal").classList.remove("hidden");
+            $("#noteModal").classList.add("show");
+        }
+
+        function closeModal() {
+            $("#noteModal").classList.remove("show");
+            $("#noteModal").classList.add("hidden");
+        }
+
+        function convertToDatetimeLocal(value) {
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return "";
+            }
+
+            const offset = date.getTimezoneOffset();
+            const localDate = new Date(date.getTime() - offset * 60000);
+
+            return localDate.toISOString().slice(0, 16);
+        }
+
+        async function saveNote(event) {
+            event.preventDefault();
+
+            const noteId = $("#noteId").value;
+
+            const payload = {
+                title: $("#title").value.trim(),
+                content: $("#content").value.trim(),
+                subject: $("#subject").value,
+                color: $("#color").value,
+                important: $("#important").checked,
+                pinned: $("#pinned").checked,
+                completed: $("#completed").checked,
+                due_date: $("#dueDate").value
+                    ? new Date($("#dueDate").value).toISOString()
+                    : null
+            };
+
+            if (!payload.title) {
+                showToast("Please enter a note title.", "error");
+                return;
+            }
+
+            try {
+                if (noteId) {
+                    await api(`/notes/${noteId}`, {
+                        method: "PUT",
+                        body: JSON.stringify(payload)
+                    });
+
+                    showToast("Note updated successfully.", "success");
+                } else {
+                    await api("/notes", {
+                        method: "POST",
+                        body: JSON.stringify(payload)
+                    });
+
+                    showToast("Note created successfully.", "success");
+                }
+
+                closeModal();
+                await loadNotes();
+                await loadStats();
+            } catch (error) {
+                console.error("Save note error:", error);
+                showToast(error.message, "error");
+            }
+        }
+
+        async function deleteNote() {
+            const noteId = $("#noteId").value;
+
+            if (!noteId) return;
+
+            if (!confirm("Are you sure you want to delete this note?")) {
+                return;
+            }
+
+            try {
+                await api(`/notes/${noteId}`, {
+                    method: "DELETE"
+                });
+
+                closeModal();
+
+                await loadNotes();
+                await loadStats();
+
+                showToast("Note deleted successfully.", "success");
+            } catch (error) {
+                console.error("Delete note error:", error);
+                showToast(error.message, "error");
+            }
+        }
+
+        async function logout() {
+            try {
+                await api("/logout", {
+                    method: "POST"
+                });
+
+                window.location.href = "/login/";
+            } catch (error) {
+                console.error("Logout error:", error);
+                window.location.href = "/login/";
+            }
+        }
+
+        function showToast(message, type = "success") {
+            const toast = $("#toast");
+
+            toast.textContent = message;
+            toast.className = `toast ${type} show`;
+
+            clearTimeout(window.toastTimer);
+
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+            }, 3000);
+        }
+
+        function setupNavigation() {
+            $$(".nav-link[data-status]").forEach(button => {
+                button.addEventListener("click", () => {
+                    $$(".nav-link").forEach(item => {
+                        item.classList.remove("active");
+                    });
+
+                    button.classList.add("active");
+
+                    state.status = button.dataset.status || "all";
+
+                    $$(".filter").forEach(filter => {
+                        filter.classList.toggle(
+                            "active",
+                            filter.dataset.status === state.status
+                        );
+                    });
+
+                    loadNotes();
+                });
+            });
+
+            $$(".filter").forEach(button => {
+                button.addEventListener("click", () => {
+                    $$(".filter").forEach(item => {
+                        item.classList.remove("active");
+                    });
+
+                    button.classList.add("active");
+
+                    state.status = button.dataset.status || "all";
+
+                    $$(".nav-link[data-status]").forEach(nav => {
+                        nav.classList.toggle(
+                            "active",
+                            nav.dataset.status === state.status
+                        );
+                    });
+
+                    loadNotes();
+                });
+            });
+
+            $$(".subject-link").forEach(button => {
+                button.addEventListener("click", () => {
+                    $$(".subject-link").forEach(item => {
+                        item.classList.remove("selected");
+                    });
+
+                    button.classList.add("selected");
+
+                    state.subject = button.dataset.subject || "all";
+
+                    loadNotes();
+                });
+            });
+        }
+
+        function setupSearch() {
+            const search = $("#searchInput");
+            let timer;
+
+            search.addEventListener("input", () => {
+                clearTimeout(timer);
+
+                timer = setTimeout(() => {
+                    state.search = search.value.trim();
+                    loadNotes();
+                }, 300);
+            });
+
+            document.addEventListener("keydown", event => {
+                if (
+                    (event.ctrlKey || event.metaKey) &&
+                    event.key.toLowerCase() === "k"
+                ) {
+                    event.preventDefault();
+                    search.focus();
+                }
+            });
+        }
+
+        function setupModal() {
+            $("#newNoteBtn").addEventListener("click", openNewModal);
+            $("#closeModal").addEventListener("click", closeModal);
+            $("#cancelBtn").addEventListener("click", closeModal);
+            $("#deleteBtn").addEventListener("click", deleteNote);
+            $("#noteForm").addEventListener("submit", saveNote);
+
+            $("#noteModal").addEventListener("click", event => {
+                if (event.target === $("#noteModal")) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener("keydown", event => {
+                if (event.key === "Escape") {
+                    closeModal();
+                }
+            });
+        }
+
+        async function initializeApp() {
+            const authenticated = await checkAuthentication();
+
+            if (!authenticated) {
+                return;
+            }
+
+            setupNavigation();
+            setupSearch();
+            setupModal();
+
+            $("#logoutBtn").addEventListener("click", logout);
+
+            await Promise.all([
+                loadNotes(),
+                loadStats()
+            ]);
+        }
+
+        document.addEventListener("DOMContentLoaded", initializeApp);
+    </script>
 
 </body>
 </html>
