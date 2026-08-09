@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, send_from_directory, session, redirect
+from flask_cors import CORS
 from pathlib import Path
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -38,6 +39,14 @@ app = Flask(
     __name__,
     static_folder=str(HTDOCS_DIR / "static"),
     static_url_path="/static"
+)
+
+CORS(
+    app,
+    supports_credentials=True,
+    origins=[
+        "https://noteplan-test.ct.ws/"
+    ]
 )
 
 
