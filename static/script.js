@@ -906,14 +906,14 @@ async function checkAuthentication() {
 async function logout() {
     try {
         await fetch(
-            "/api/logout",
+            `${API_BASE}/api/logout`,
             {
-                method: "POST"
+                method: "POST",
+                credentials: "include"
             }
         );
 
-        window.location.href =
-            "/login/";
+        window.location.href = "/login/";
 
     } catch (error) {
         showToast(
@@ -922,7 +922,6 @@ async function logout() {
         );
     }
 }
-
 async function startApp() {
     const user =
         await checkAuthentication();
