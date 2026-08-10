@@ -121,6 +121,13 @@ def init_db():
             "Andrei Villarama",
             "ICT 11-2",
             "student"
+        ),
+        (
+            "2026-STJAMES-4634",
+            "G2-2026-9562",
+            "Alexa Dynel",
+            "ICT 11-2",
+            "student"
         )
     ]
 
